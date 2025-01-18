@@ -20,3 +20,14 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+*.env
+*.exe
+*.db
+*.duckdb
+*.ddb
+database/
+tmp/
+bin/
+.air.toml
+Makefile
