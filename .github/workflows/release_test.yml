@@ -1,0 +1,45 @@
+name: Build Python Wheels
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.8, 3.9, 3.10, 3.11]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: "1.23" # Specify the Go version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine-m pybindgen
+        go install golang.org/x/tools/cmd/goimports@latest
+        go install github.com/go-python/gopy@latest
+
+    - name: Build Python wheel
+      run: |
+        gopy bind -output=output_dir -lang=python ./go
+        python setup.py bdist_wheel
+
+    - name: Upload artifact
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: python-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
+        path: dist/*.whl
