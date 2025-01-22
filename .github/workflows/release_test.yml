@@ -39,8 +39,8 @@ jobs:
     - name: Debug Python headers
       run: |
         python${{ matrix.python-version }}-config --includes
-        ls /usr/include/python${{ matrix.python-version }}
-        
+      #  ls /usr/include/python${{ matrix.python-version }}
+
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
       if: ${{ matrix.os == 'macos-latest' }}
@@ -64,7 +64,9 @@ jobs:
 
     - name: Build Python wheel
       run: |
-        gopy build -vm=python -output=./dist etlx.go
+        INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
+        echo "Include Path: $INCLUDE_PATH"
+        gopy build -vm=python -output=./dist etlx.go -- -I$INCLUDE_PATH
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
