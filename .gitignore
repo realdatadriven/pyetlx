@@ -29,5 +29,8 @@ TestResults.xml
 database/
 tmp/
 bin/
+dist/
+build/
 .air.toml
+*egg*
 Makefile

@@ -34,7 +34,7 @@ jobs:
 
     - name: Build Python wheel
       run: |
-        gopy bind -output=output_dir -lang=python ./go
+        gopy build -output=output_dir -vm=python .
         python setup.py bdist_wheel
 
     - name: Upload artifact
@@ -43,3 +43,5 @@ jobs:
       with:
         name: pyetlx-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
         path: dist/*.whl
+    
+    
