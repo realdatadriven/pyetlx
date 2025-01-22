@@ -56,7 +56,8 @@ jobs:
     - name: Build Python wheel
       run: |
         PYTHON_INCLUDE=$(python${{ matrix.python-version }}-config --includes | sed 's/-I//')
-        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
+        gopy build -vm=python${{ matrix.python-version }}-dev -output=./dist etlx.go -- -I$PYTHON_INCLUDE
+#       gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
       run: |
@@ -67,7 +68,7 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v3
       with:
-        name: pyetlx-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
+        name: python-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
         path: dist/*.whl
     
     
