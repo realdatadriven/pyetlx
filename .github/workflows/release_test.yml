@@ -31,6 +31,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
+        python${PYTHON_VERSION}-config --includes
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
@@ -55,7 +56,8 @@ jobs:
 
     - name: Build Python wheel
       run: |
-        gopy build -vm=python -output=./dist etlx.go
+        PYTHON_INCLUDE=$(python${{ matrix.python-version }}-config --includes | sed 's/-I//')
+        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
       run: |
