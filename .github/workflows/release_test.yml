@@ -35,6 +35,11 @@ jobs:
     - name: Build Python wheel
       run: |
         gopy build -vm=python -output=./dist etlx.go
+        
+    - name: See dist
+      run: |
+        ls -lsh ./dist
+          
 
     - name: Upload artifact
       if: success()
