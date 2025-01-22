@@ -31,11 +31,16 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
-        mkdir -p python_include python_lib
-        cp -r /usr/include/python${{ matrix.python-version }} ./
-        cp -r /usr/lib/x86_64-linux-gnu/libpython${{ matrix.python-version }}.* ./
-        ls -lsh
+      #  mkdir -p python_include python_lib
+      #  cp -r /usr/include/python${{ matrix.python-version }} ./
+      #  cp -r /usr/lib/x86_64-linux-gnu/libpython${{ matrix.python-version }}.* ./
+      #  ls -lsh
 
+    - name: Debug Python headers
+      run: |
+        python${{ matrix.python-version }}-config --includes
+        ls /usr/include/python${{ matrix.python-version }}
+        
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
       if: ${{ matrix.os == 'macos-latest' }}
