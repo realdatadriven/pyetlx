@@ -449,7 +449,7 @@ func Slice_byte_to_bytes(handle CGoHandle) *C.PyObject {
 	s := deptrFromHandle_Slice_byte(handle)
 	ptr := unsafe.Pointer(&s[0])
 	size := len(s)
-	return C.PyBytes_FromStringAndSize((*C.char)(ptr), C.longlong(int64(size)))
+	return C.PyBytes_FromStringAndSize((*C.char)(ptr), _Ctype_Py_ssize_t(size))
 }
 
 // Converters for implicit pointer handles for type: []error
