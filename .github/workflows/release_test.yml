@@ -31,10 +31,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
-      #  mkdir -p python_include python_lib
-      #  cp -r /usr/include/python${{ matrix.python-version }} ./
-      #  cp -r /usr/lib/x86_64-linux-gnu/libpython${{ matrix.python-version }}.* ./
-      #  ls -lsh
 
     - name: Debug Python headers
       run: |
@@ -62,12 +58,12 @@ jobs:
         go install golang.org/x/tools/cmd/goimports@latest
         go install github.com/go-python/gopy@latest
 
-    - name: Build Python wheel
+    - name: Build Python wheel (Ubuntu)
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
         echo "Include Path: $INCLUDE_PATH"
         cp -r $INCLUDE_PATH/* ./
-        ls -lsh ./
         gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
