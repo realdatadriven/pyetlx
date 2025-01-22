@@ -31,7 +31,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
-        python${PYTHON_VERSION}-config --includes
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
