@@ -30,14 +30,14 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python${{ matrix.python-version }}-dev
+        sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
       if: ${{ matrix.os == 'macos-latest' }}
       run: |
         brew update
-        brew install gcc unixodbc
+        brew install gcc unixodbc python@${{ matrix.python-version }}
     
     # Conditional installation for Windows
     - name: Install dependencies (Windows)
