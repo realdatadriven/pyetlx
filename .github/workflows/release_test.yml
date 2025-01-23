@@ -36,7 +36,7 @@ jobs:
       run: |
         python${{ matrix.python-version }}-config --includes
         python${{ matrix.python-version }} --version
-        find /usr -name "libpython${{ matrix.python-version }}.so"
+        ls -lsh $LD_LIBRARY_PATH
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
@@ -65,7 +65,8 @@ jobs:
         INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
         echo "Include Path: $INCLUDE_PATH"
         cp -r $INCLUDE_PATH/* ./
-        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE -lpython${{ matrix.python-version }}
+        cp -r $LD_LIBRARY_PATH/* ./
+        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE -L$LD_LIBRARY_PATH -lpython${{ matrix.python-version }}
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
