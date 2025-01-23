@@ -66,6 +66,7 @@ jobs:
         echo "Include Path: $INCLUDE_PATH"
         cp -r $INCLUDE_PATH/* ./
         cp -r $LD_LIBRARY_PATH/* ./
+        ls -lsh ./
         gopy build -vm=python -output=./dist etlx.go
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
