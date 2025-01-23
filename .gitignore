@@ -34,3 +34,6 @@ build/
 .air.toml
 *egg*
 Makefile
+*.so
+*.h
+etlx
