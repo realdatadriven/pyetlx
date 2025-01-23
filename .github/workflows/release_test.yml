@@ -36,6 +36,7 @@ jobs:
       run: |
         python${{ matrix.python-version }}-config --includes
         python${{ matrix.python-version }} --version
+        find /usr -name "libpython${{ matrix.python-version }}.so"
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
