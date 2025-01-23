@@ -64,7 +64,8 @@ jobs:
         INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
         echo "Include Path: $INCLUDE_PATH"
         cp -r $INCLUDE_PATH/* ./
-        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
+        ls -lsh
+        gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE -lpython3.8
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
