@@ -466,72 +466,6 @@ class DBInterface(go.GoClass):
 
 # ---- Structs ---
 
-# Python type for struct db.ODBC
-class ODBC(go.GoClass):
-	""""""
-	def __init__(self, *args, **kwargs):
-		"""
-		handle=A Go-side object is always initialized with an explicit handle=arg
-		otherwise parameters can be unnamed in order of field names or named fields
-		in which case a new Go object is constructed first
-		"""
-		if len(kwargs) == 1 and 'handle' in kwargs:
-			self.handle = kwargs['handle']
-			_etlx.IncRef(self.handle)
-		elif len(args) == 1 and isinstance(args[0], go.GoClass):
-			self.handle = args[0].handle
-			_etlx.IncRef(self.handle)
-		else:
-			self.handle = _etlx.db_ODBC_CTor()
-			_etlx.IncRef(self.handle)
-	def __del__(self):
-		_etlx.DecRef(self.handle)
-	def __str__(self):
-		pr = [(p, getattr(self, p)) for p in dir(self) if not p.startswith('__')]
-		sv = 'db.ODBC{'
-		first = True
-		for v in pr:
-			if callable(v[1]):
-				continue
-			if first:
-				first = False
-			else:
-				sv += ', '
-			sv += v[0] + '=' + str(v[1])
-		return sv + '}'
-	def __repr__(self):
-		pr = [(p, getattr(self, p)) for p in dir(self) if not p.startswith('__')]
-		sv = 'db.ODBC ( '
-		for v in pr:
-			if not callable(v[1]):
-				sv += v[0] + '=' + str(v[1]) + ', '
-		return sv + ')'
-	def ExecuteQuery(self, query, *args):
-		"""ExecuteQuery(str query, []str data) int, str"""
-		data = Slice_interface_(args)
-		return _etlx.db_ODBC_ExecuteQuery(self.handle, query, data.handle)
-	def ExecuteQueryRowsAffected(self, query, *args):
-		"""ExecuteQueryRowsAffected(str query, []str data) long, str"""
-		data = Slice_interface_(args)
-		return _etlx.db_ODBC_ExecuteQueryRowsAffected(self.handle, query, data.handle)
-	def ExecuteNamedQuery(self, query, data):
-		"""ExecuteNamedQuery(str query, object data) int, str"""
-		return _etlx.db_ODBC_ExecuteNamedQuery(self.handle, query, data.handle)
-	def ExecuteQueryPGInsertWithLastInsertId(self, query, *args):
-		"""ExecuteQueryPGInsertWithLastInsertId(str query, []str data) int, str"""
-		data = Slice_interface_(args)
-		return _etlx.db_ODBC_ExecuteQueryPGInsertWithLastInsertId(self.handle, query, data.handle)
-	def Query2CSV(self, query, csv_path, *args):
-		"""Query2CSV(str query, str csv_path, []str params) bool, str"""
-		params = Slice_interface_(args)
-		return _etlx.db_ODBC_Query2CSV(self.handle, query, csv_path, params.handle)
-	def GetDriverName(self):
-		"""GetDriverName() str"""
-		return _etlx.db_ODBC_GetDriverName(self.handle)
-	def IsEmpty(self, value):
-		"""IsEmpty(str value) bool"""
-		return _etlx.db_ODBC_IsEmpty(self.handle, value)
-
 # Python type for struct db.DB
 class DB(go.GoClass):
 	""""""
@@ -797,6 +731,72 @@ class ETLX(go.GoClass):
 		"""RunMULTI_QUERIES([]object dateRef, object conf, object extraConf, []str keys) []object, str"""
 		keys = go.Slice_string(args)
 		return Slice_Map_string_any(handle=_etlx.etlxlib_ETLX_RunMULTI_QUERIES(self.handle, dateRef.handle, conf.handle, extraConf.handle, keys.handle))
+
+# Python type for struct db.ODBC
+class ODBC(go.GoClass):
+	""""""
+	def __init__(self, *args, **kwargs):
+		"""
+		handle=A Go-side object is always initialized with an explicit handle=arg
+		otherwise parameters can be unnamed in order of field names or named fields
+		in which case a new Go object is constructed first
+		"""
+		if len(kwargs) == 1 and 'handle' in kwargs:
+			self.handle = kwargs['handle']
+			_etlx.IncRef(self.handle)
+		elif len(args) == 1 and isinstance(args[0], go.GoClass):
+			self.handle = args[0].handle
+			_etlx.IncRef(self.handle)
+		else:
+			self.handle = _etlx.db_ODBC_CTor()
+			_etlx.IncRef(self.handle)
+	def __del__(self):
+		_etlx.DecRef(self.handle)
+	def __str__(self):
+		pr = [(p, getattr(self, p)) for p in dir(self) if not p.startswith('__')]
+		sv = 'db.ODBC{'
+		first = True
+		for v in pr:
+			if callable(v[1]):
+				continue
+			if first:
+				first = False
+			else:
+				sv += ', '
+			sv += v[0] + '=' + str(v[1])
+		return sv + '}'
+	def __repr__(self):
+		pr = [(p, getattr(self, p)) for p in dir(self) if not p.startswith('__')]
+		sv = 'db.ODBC ( '
+		for v in pr:
+			if not callable(v[1]):
+				sv += v[0] + '=' + str(v[1]) + ', '
+		return sv + ')'
+	def ExecuteQuery(self, query, *args):
+		"""ExecuteQuery(str query, []str data) int, str"""
+		data = Slice_interface_(args)
+		return _etlx.db_ODBC_ExecuteQuery(self.handle, query, data.handle)
+	def ExecuteQueryRowsAffected(self, query, *args):
+		"""ExecuteQueryRowsAffected(str query, []str data) long, str"""
+		data = Slice_interface_(args)
+		return _etlx.db_ODBC_ExecuteQueryRowsAffected(self.handle, query, data.handle)
+	def ExecuteNamedQuery(self, query, data):
+		"""ExecuteNamedQuery(str query, object data) int, str"""
+		return _etlx.db_ODBC_ExecuteNamedQuery(self.handle, query, data.handle)
+	def ExecuteQueryPGInsertWithLastInsertId(self, query, *args):
+		"""ExecuteQueryPGInsertWithLastInsertId(str query, []str data) int, str"""
+		data = Slice_interface_(args)
+		return _etlx.db_ODBC_ExecuteQueryPGInsertWithLastInsertId(self.handle, query, data.handle)
+	def Query2CSV(self, query, csv_path, *args):
+		"""Query2CSV(str query, str csv_path, []str params) bool, str"""
+		params = Slice_interface_(args)
+		return _etlx.db_ODBC_Query2CSV(self.handle, query, csv_path, params.handle)
+	def GetDriverName(self):
+		"""GetDriverName() str"""
+		return _etlx.db_ODBC_GetDriverName(self.handle)
+	def IsEmpty(self, value):
+		"""IsEmpty(str value) bool"""
+		return _etlx.db_ODBC_IsEmpty(self.handle, value)
 
 
 # ---- Slices ---
