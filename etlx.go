@@ -64,7 +64,7 @@ import (
 
 // main doesn't do anything in lib / pkg mode, but is essential for exe mode
 func main() {
-
+	fmt.Println("ETLX Loaded")
 }
 
 // initialization functions -- can be called from python after library is loaded

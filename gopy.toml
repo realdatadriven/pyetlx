@@ -1,0 +1,20 @@
+# The Go package path you want to bind
+package = "github.com/realdatadriven/etlx"
+
+# The output directory for the generated bindings
+output = "./output"
+
+# The Python interpreter to use
+#pythonpath = "C:\\Users\\joaot\\Python\\Python310\\python.exe"
+
+# Whether to generate files without building immediately
+no-build = false
+
+# Whether to generate Makefile
+no-make = false
+
+# Enable verbose logging
+verbose = true
+
+[build]
+main = "main"
