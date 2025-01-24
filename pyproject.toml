@@ -25,7 +25,7 @@ Homepage = "https://github.com/realdatadriven/etlx"
 #license-files = ["LICEN[CS]E*"]
 
 [tool.setuptools]
-packages = ["src"]
+packages = ["."]
 
 [tool.extension]
 name = "_etlx"
