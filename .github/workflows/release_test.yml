@@ -60,7 +60,9 @@ jobs:
         go install github.com/go-python/gopy@latest
     
     - name: Generate Python Bindings
-      run: gopy gen github.com/realdatadriven/etlx
+      run: |
+        gopy gen github.com/realdatadriven/etlx
+        ls -lsh ./   
       
     - name: Fix Generated Code
       run: |
