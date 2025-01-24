@@ -66,7 +66,7 @@ jobs:
       
     - name: Fix Generated Code
       run: |
-        python3 fix_main.py
+        python3 fix.py
       # Or use a bash script:
       # run: bash fix_main.sh
       
