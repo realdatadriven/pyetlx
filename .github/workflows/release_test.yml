@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest, windows-latest]
+        os: [ubuntu-20.04] # ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8] #, 3.9, 3.10, 3.11]
     runs-on: ${{ matrix.os }}
 
@@ -27,7 +27,7 @@ jobs:
     
     # Conditional installation for Ubuntu
     - name: Install dependencies (Ubuntu)
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
@@ -60,19 +60,18 @@ jobs:
         go install github.com/go-python/gopy@latest
 
     - name: Build Python wheel (Ubuntu)
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: |
         INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
         echo "Include Path: $INCLUDE_PATH"
         cp -r $INCLUDE_PATH/* ./
         cp -r $LD_LIBRARY_PATH/* ./
-        gopy build -vm=python -output=./dist etlx.go -- -L. -lpython${{ matrix.python-version }} -v
+        gopy build -vm=python -output=./dist etlx.go -- -I$INCLUDE_PATH -L$LD_LIBRARY_PATH -lpython${{ matrix.python-version }} -v
       # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
         
     - name: See dist
       run: |
-        ls -lsh ./dist
-          
+        ls -lsh ./dists          
 
     - name: Upload artifact
       if: success()
