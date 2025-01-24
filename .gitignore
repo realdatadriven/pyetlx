@@ -37,3 +37,5 @@ sMakefile
 *.so
 *.h
 etlx
+src/
+__pycache__

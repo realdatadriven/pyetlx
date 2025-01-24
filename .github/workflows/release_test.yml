@@ -55,27 +55,25 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine pybindgen
+        pip install setuptools packaging wheel twine pybindgen
         go install golang.org/x/tools/cmd/goimports@latest
         go install github.com/go-python/gopy@latest
     
     - name: Generate Python Bindings
       run: |
-        gopy gen github.com/realdatadriven/etlx
-        ls -lsh ./   
+        gopy gen -output=src github.com/realdatadriven/etlx
       
     - name: Fix Generated Code
       run: |
         python3 fix.py
-      # Or use a bash script:
-      # run: bash fix_main.sh
-      
 
-    - name: Build Python wheel (Ubuntu)
-      if: ${{ matrix.os == 'ubuntu-20.04' }}
+    - name: Build Python wheel
       run: |
+        cd ./src
         make build
-        
+        cd ..
+        python3 -m build
+
     - name: See dist
       run: |
         ls -lsh ./dist          
