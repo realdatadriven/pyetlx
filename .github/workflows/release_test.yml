@@ -58,22 +58,25 @@ jobs:
         pip install setuptools wheel twine pybindgen
         go install golang.org/x/tools/cmd/goimports@latest
         go install github.com/go-python/gopy@latest
+    
+    - name: Generate Python Bindings
+      run: gopy gen github.com/realdatadriven/etlx
+      
+    - name: Fix Generated Code
+      run: |
+        python3 fix_main.py
+      # Or use a bash script:
+      # run: bash fix_main.sh
+      
 
     - name: Build Python wheel (Ubuntu)
       if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: |
-        INCLUDE_PATH=$(python${{ matrix.python-version }}-config --includes | cut -d' ' -f1 | cut -c3-)
-        echo "Include Path: $INCLUDE_PATH"
-        gopy build -output=./dist etlx.go
-      # gopy build -vm=python -output=./dist etlx.go -- -I$INCLUDE_PATH -L$LD_LIBRARY_PATH
-      # gopy build -vm=python -output=./dist etlx.go -- -I$PYTHON_INCLUDE
-
-      #cp -r $INCLUDE_PATH/* ./
-      #cp -r $LD_LIBRARY_PATH/* ./
+        make build
         
     - name: See dist
       run: |
-        ls -lsh ./dists          
+        ls -lsh ./dist          
 
     - name: Upload artifact
       if: success()

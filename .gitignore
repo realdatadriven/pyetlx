@@ -33,7 +33,7 @@ dist/
 build/
 .air.toml
 *egg*
-Makefile
+sMakefile
 *.so
 *.h
 etlx
