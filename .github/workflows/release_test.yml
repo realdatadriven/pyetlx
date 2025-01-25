@@ -84,12 +84,19 @@ jobs:
       with:
         name: python-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
         path: dist/*.whl
-        
-    - name: Publish to PyPI
-      env:
-        TWINE_USERNAME: "__token__"
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        twine upload dist/*
+    
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        packages-dir: dist/
+
+    #- name: Publish to PyPI
+    #  env:
+    #    TWINE_USERNAME: "__token__"
+    #    TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    #  run: |
+    #    twine upload dist/*
     
     
