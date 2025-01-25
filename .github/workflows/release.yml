@@ -45,6 +45,9 @@ jobs:
         brew install unixodbc python@${{ matrix.python-version }}
         brew --prefix unixodbc
         ODBC_PREFIX=$(brew --prefix unixodbc)
+        echo "CGO_ENABLED=1" >> $GITHUB_ENV
+        echo "CGO_CFLAGS=-I$ODBC_PREFIX/include" >> $GITHUB_ENV
+        echo "CGO_LDFLAGS=-L$ODBC_PREFIX/lib -lodbc" >> $GITHUB_ENV
     
     # Conditional installation for Windows
     - name: Install dependencies (Windows)
