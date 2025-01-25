@@ -1,7 +1,7 @@
 import re
 
 # Path to the generated main.go file
-file_path = "src/etlx.go"
+file_path = "./etlx.go"
 
 # Read the file
 with open(file_path, mode = "r", encoding="utf-8") as file:
