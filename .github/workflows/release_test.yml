@@ -61,7 +61,7 @@ jobs:
     
     - name: Generate Python Bindings
       run: |
-        gopy gen -output=. github.com/realdatadriven/etlx
+        gopy gen -output=src github.com/realdatadriven/etlx
       
     - name: Fix Generated Code
       run: |
@@ -69,7 +69,9 @@ jobs:
 
     - name: Build Python wheel
       run: |
+        cd ./src
         make build
+        cd ..
         python3 -m build
 
     - name: See dist

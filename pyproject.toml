@@ -25,9 +25,9 @@ Homepage = "https://github.com/realdatadriven/etlx"
 #license-files = ["LICEN[CS]E*"]
 
 [tool.setuptools]
-packages = ["."]
+packages = ["src"]
 
 [tool.extension]
 name = "_etlx"
-sources = ["_etlx.so", "etlx_go.so", "etlx_go.h", "etlx.c"]  # Replace with your shared object filename
+sources = ["src/_etlx.so", "src/etlx_go.so", "src/etlx_go.h", "src/etlx.c"]  # Replace with your shared object filename
 
