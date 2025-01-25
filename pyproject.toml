@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "etlx"
+name = "pyetlx"
 version = "0.1.0"
 description = "Python bindings for the etlx Go library"
 readme = "README.md"
