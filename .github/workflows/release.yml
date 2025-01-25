@@ -2,6 +2,9 @@ name: Build Python Wheels
 
 on:
     workflow_dispatch:
+    push:
+        tags:
+        - 'v*'
       
 permissions:
   id-token: write
@@ -9,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-20.04] # ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest] # ubuntu-20.04, macos-latest, windows-latest]
         python-version: [3.8] #, 3.9, 3.10, 3.11]
     runs-on: ${{ matrix.os }}
 
@@ -33,12 +36,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
-
-    - name: Debug Python headers
-      run: |
-        python${{ matrix.python-version }}-config --includes
-        python${{ matrix.python-version }} --version
-        ls -lsh $LD_LIBRARY_PATH
 
     # Conditional installation for macOS
     - name: Install dependencies (macOS)
@@ -64,6 +61,11 @@ jobs:
     - name: Generate Python Bindings
       run: |
         gopy gen -output=src github.com/realdatadriven/etlx
+
+    - name: See generated files
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        dir ./src
       
     - name: Fix Generated Code
       run: |
@@ -77,8 +79,9 @@ jobs:
         python3 -m build
 
     - name: See dist
+      if: ${{ matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'}}
       run: |
-        ls -lsh ./dist          
+        ls -lsh ./dist
 
     - name: Upload artifact
       if: success()
