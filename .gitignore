@@ -39,3 +39,4 @@ sMakefile
 etlx
 src/
 __pycache__
+test.py
