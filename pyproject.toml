@@ -35,3 +35,6 @@ packages = ["src"]
 
 #[tool.setuptools.include-package-data] 
 # This ensures files specified by `package_data` and `MANIFEST.in` are included
+
+[tool.setuptools.dynamic]
+version = {attr = "src.__version__"}  # Ensure dynamic versioning if needed

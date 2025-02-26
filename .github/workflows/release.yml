@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest] # ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04] # ubuntu-20.04, macos-latest, windows-latest]
         python-version: [3.9] #3.8, 3.9, 3.10, 3.11]
     runs-on: ${{ matrix.os }}
 
@@ -62,6 +62,23 @@ jobs:
         pip install setuptools packaging wheel twine pybindgen build
         go install golang.org/x/tools/cmd/goimports@latest
         go install github.com/go-python/gopy@latest
+
+    - name: Update pyproject.toml with platform info
+      if: ${{ matrix.os != 'windows-latest' }}
+      run: |
+          PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
+          ARCH=$(uname -m)
+          sed -i "s/version = \"0.1.1\"/version = \"0.1.1-${PLATFORM}-${ARCH}\"/g" pyproject.toml
+      shell: bash
+    
+    - name: Update pyproject.toml with platform info (Windows)
+      if: ${{ matrix.os == 'windows-latest' }}
+      run: |
+        $platform = $Env:OS.ToLower()
+        $arch = $Env:PROCESSOR_ARCHITECTURE.ToLower()
+        (Get-Content pyproject.toml) -replace 'version = "0.1.1"', "version = `"0.1.1-$platform-$arch`"" | Set-Content pyproject.toml
+      shell: pwsh
+    
     
     - name: Generate Python Bindings
       run: |
@@ -76,8 +93,8 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 -m build      
-
+        python3 -m build --wheel --no-isolation
+        
     - name: See generated files (Windows)
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
@@ -94,15 +111,8 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: python-wheel
+        name: python-wheel-${{ matrix.os }}-py${{ matrix.python-version }}
         path: dist/*.whl
-
-    #- name: Publish to PyPI
-    #  env:
-    #    TWINE_USERNAME: "__token__"
-    #    TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-    #  run: |
-    #    twine upload dist/*
     
   release:
     permissions: write-all
@@ -112,7 +122,6 @@ jobs:
       - name: Download Python Wheels
         uses: actions/download-artifact@v4
         with:
-          name: python-wheel
           path: dist
       - name: See downloads
         run: |
