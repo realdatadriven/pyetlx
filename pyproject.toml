@@ -7,11 +7,12 @@ name = "pyetlx"
 version = "0.1.1"
 description = "Python bindings for the etlx Go library"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
 ]
 authors = [
   { name="Real Data-Driven", email="real.datadriven@gmail.com" },
@@ -23,6 +24,7 @@ Homepage = "https://github.com/realdatadriven/etlx"
 
 [tool.setuptools]
 packages = ["src"]
+include-package-data = true
 
 [tool.setuptools.package-data]
 "src" = [

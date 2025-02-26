@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-20.04] # ubuntu-20.04, macos-latest, windows-latest]
-        python-version: [3.9] #3.8, 3.9, 3.10, 3.11]
+        python-version: [3.9] #3.9, 3.10, 3.11]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -64,7 +64,7 @@ jobs:
         go install github.com/go-python/gopy@latest
 
     - name: Update pyproject.toml with platform info
-      if: ${{ matrix.os != 'windows-latest' }}
+      if: ${{ matrix.os == '---windows-latest' }}
       run: |
           PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
           ARCH=$(uname -m)
@@ -72,7 +72,7 @@ jobs:
       shell: bash
     
     - name: Update pyproject.toml with platform info (Windows)
-      if: ${{ matrix.os == 'windows-latest' }}
+      if: ${{ matrix.os == '--windows-latest' }}
       run: |
         $platform = $Env:OS.ToLower()
         $arch = $Env:PROCESSOR_ARCHITECTURE.ToLower()
@@ -88,13 +88,23 @@ jobs:
       run: |
         python3 fix.py
 
-    - name: Build Python wheel
+    - name: Build Python wheel (Linux)
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: |
         cd ./src
         make build
         cd ..
-        python3 -m build --wheel --no-isolation
-        
+        python3 setup.py bdist_wheel --plat-name manylinux_x86_64 
+    
+    - name: Build Python wheel
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        cd ./src
+        make build
+        cd ..
+        python3 setup.py bdist_wheel --plat-name win_amd64
+    #python 3 -m build --wheel --no-isolation
+
     - name: See generated files (Windows)
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
@@ -102,7 +112,7 @@ jobs:
         dir ./dist
     
     - name: See dist (Ubuntu & MacOS)
-      if: ${{ matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'}}
+      if: ${{ matrix.os != 'windows-latest'}}
       run: |
         ls -lsh ./src
         ls -lsh ./dist

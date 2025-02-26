@@ -14,6 +14,8 @@
 # limitations under the License.
 
 import os
+import sys
+import platform
 
 import setuptools
 
@@ -30,6 +32,7 @@ setuptools.setup(
     author='realdatadriven',
     author_email='real.datadriven@gmail.com',
     description='',
+    #packages=["src"],
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/realdatadriven/pypyetlx',
@@ -41,15 +44,14 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude='_test'),
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: Apache Software License',
-        'Operating System :: OS Independent',
+        'License :: OSI Approved :: Apache Software License'
     ],
     include_package_data=True,
-    install_requires=[
-        'pandas',
-    ],
+    install_requires=[],
     py_modules=['pyetlx'],
     zip_safe=False,
 
-    python_requires='>=3.7, <4'
+    python_requires='>=3.9, <4',
+    python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
+    platform_tag = f"{platform.system().lower()}_{platform.machine()}",
 )
