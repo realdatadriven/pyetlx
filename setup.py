@@ -41,7 +41,7 @@ setuptools.setup(
         'Source': 'https://github.com/realdatadriven/pypyetlx',
         'Tracker': 'https://github.com/realdatadriven/pypyetlx/issues',
     },
-    packages=setuptools.find_packages(exclude='_test'),
+    #packages=setuptools.find_packages(exclude='_test'),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: Apache Software License'
@@ -50,7 +50,11 @@ setuptools.setup(
     install_requires=[],
     py_modules=['pyetlx'],
     zip_safe=False,
-
+    packages = setuptools.find_packages(where='src'),
+    package_dir={'':'src'},
+    package_data={
+        'pyetlx': ['src/*'],
+    },
     python_requires='>=3.9, <4',
     python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
     platform_tag = f"{platform.system().lower()}_{platform.machine()}",
