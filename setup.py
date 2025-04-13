@@ -22,7 +22,7 @@ import setuptools
 with open('./README.md', mode = 'r', encoding = 'utf-8') as fh:
     long_description = fh.read()
 
-version = 'v0.0.1'
+version = 'v0.0.2'
 if os.environ.get('BUILD_VERSION') is not None:
     version = os.environ.get('BUILD_VERSION')
 
