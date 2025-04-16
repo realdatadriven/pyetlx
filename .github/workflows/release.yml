@@ -97,7 +97,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-manylinux_x86_64 
+        python3 setup.py bdist_wheel --plat-name cp311-cp311-manylinux_x86_64 
     
     - name: Build Python wheel (Macos)
       if: ${{ matrix.os == 'macos-latest' }}
