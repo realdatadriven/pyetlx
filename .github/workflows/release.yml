@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest, windows-latest]
+        os: [ubuntu-22.04] #, macos-latest, windows-latest]
         python-version: [3.11] #, '3.10', '3.11', '3.12']
     runs-on: ${{ matrix.os }}
 
@@ -28,11 +28,11 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: "1.23" # Specify the Go version
+        go-version: "1.24" # Specify the Go version
     
     # Conditional installation for Ubuntu
     - name: Install dependencies (Ubuntu)
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os == 'ubuntu-22.04' }}
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential gcc g++ unixodbc unixodbc-dev python3-dev python${{ matrix.python-version }}-dev
@@ -88,7 +88,7 @@ jobs:
         python3 fix.py
 
     - name: Build Python wheel (Linux)
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os == 'ubuntu-22.04' }}
       run: |
         cd ./src
         make build
@@ -125,7 +125,7 @@ jobs:
     
   release:
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [build]
     steps:
       - name: Download Python Wheels
