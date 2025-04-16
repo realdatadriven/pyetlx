@@ -51,10 +51,10 @@ setuptools.setup(
     #py_modules=['pyetlx'],
     zip_safe=False,
     packages = setuptools.find_packages(where='src'),
-    package_dir={'':'src'},
-    package_data={
-        '': ['src/*'],
-    },
+    #package_dir={'':'src'},
+    #package_data={
+    #    '': ['src/*'],
+    #},
     python_requires='>=3.9, <4',
     python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
     platform_tag = f"{platform.system().lower()}_{platform.machine()}",
