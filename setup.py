@@ -48,7 +48,7 @@ setuptools.setup(
     ],
     include_package_data=True,
     install_requires=[],
-    py_modules=['pyetlx'],
+    #py_modules=['pyetlx'],
     zip_safe=False,
     packages = setuptools.find_packages(where='src'),
     package_dir={'':'src'},
