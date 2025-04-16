@@ -97,7 +97,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name linux_x86_64 
+        python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-manylinux_x86_64 
     
     - name: Build Python wheel (Macos)
       if: ${{ matrix.os == 'macos-latest' }}
@@ -105,7 +105,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name macosx_x86_64 
+        python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-macosx_x86_64 
     
     - name: Build Python wheel 
       if: ${{ matrix.os == 'windows-latest'}}
@@ -113,7 +113,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name win_amd64
+        python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-win_amd64
     #python 3 -m build --wheel --no-isolation
 
     - name: See generated files (Windows)
