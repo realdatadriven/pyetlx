@@ -20,6 +20,15 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
+    - name: Extract tag name from GITHUB_REF
+      run: |
+        TAG_NAME=$(echo $GITHUB_REF | sed -E's/refs\/tags\/(.*)/\1/')
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+
+    - name: Set Python build version
+      run: |
+        sed -i "s/version = '.*'/version = '$TAG_NAME'/g" setup.py
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -93,9 +102,17 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name manylinux_x86_64 
+        python3 setup.py bdist_wheel --plat-name linux_x86_64 
     
-    - name: Build Python wheel
+    - name: Build Python wheel (Macos)
+      if: ${{ matrix.os == 'macos-latest' }}
+      run: |
+        cd ./src
+        make build
+        cd ..
+        python3 setup.py bdist_wheel --plat-name macosx_x86_64 
+    
+    - name: Build Python wheel 
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
         cd ./src
