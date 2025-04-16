@@ -20,14 +20,9 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Extract tag name from GITHUB_REF
-      run: |
-        TAG_NAME=$(echo $GITHUB_REF | sed -E's/refs\/tags\/(.*)/\1/')
-        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-
     - name: Set Python build version
       run: |
-        sed -i "s/version = '.*'/version = '$TAG_NAME'/g" setup.py
+        sed -i "s/version = '.*'/version = '${{ github.ref_name }}'/g" setup.py
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
