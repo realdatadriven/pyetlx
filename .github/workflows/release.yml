@@ -108,12 +108,20 @@ jobs:
         python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-macosx_x86_64 
     
     - name: Build Python wheel 
-      if: ${{ matrix.os == 'windows-latest'}}
+      if: ${{ matrix.os == 'windows-latest---'}}
       run: |
         cd ./src
         make build
         cd ..
         python3 setup.py bdist_wheel --plat-name cp311-cp311-win_amd64
+    
+    - name: Build Python wheel windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        cd ./src
+        make build
+        cd ..
+        python3 -m build
     #python 3 -m build --wheel --no-isolation
 
     - name: See generated files (Windows)

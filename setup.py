@@ -32,7 +32,6 @@ setuptools.setup(
     author='realdatadriven',
     author_email='real.datadriven@gmail.com',
     description='',
-    #packages=["src"],
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/realdatadriven/pypyetlx',
@@ -41,20 +40,14 @@ setuptools.setup(
         'Source': 'https://github.com/realdatadriven/pypyetlx',
         'Tracker': 'https://github.com/realdatadriven/pypyetlx/issues',
     },
-    #packages=setuptools.find_packages(exclude='_test'),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: Apache Software License'
     ],
     include_package_data=True,
     install_requires=[],
-    #py_modules=['pyetlx'],
     zip_safe=False,
     packages = setuptools.find_packages(where='src'),
-    #package_dir={'':'src'},
-    #package_data={
-    #    '': ['src/*'],
-    #},
     python_requires='>=3.9, <4',
     python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
     platform_tag = f"{platform.system().lower()}_{platform.machine()}",
