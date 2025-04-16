@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest] #ubuntu-22.04, macos-latest, windows-latest]
-        python-version: [3.11] #, '3.10', '3.11', '3.12']
+        python-version: [3.11] #, 3.10, 3.11, 3.12]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -97,7 +97,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-cp${{ matrix.python-version }}-manylinux_x86_64 
+        python3 setup.py bdist_wheel --plat-name cp11-cp11-linux-x86_64 
     
     - name: Build Python wheel (Macos)
       if: ${{ matrix.os == 'macos-latest' }}

@@ -49,6 +49,6 @@ setuptools.setup(
     zip_safe=False,
     packages = setuptools.find_packages(where='src'),
     python_requires='>=3.9, <4',
-    python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
-    platform_tag = f"{platform.system().lower()}_{platform.machine()}",
+    #python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}-cp{sys.version_info.major}{sys.version_info.minor}",
+    #platform_tag = f"{platform.system().lower()}-{platform.machine()}",
 )
