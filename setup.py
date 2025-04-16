@@ -53,7 +53,7 @@ setuptools.setup(
     packages = setuptools.find_packages(where='src'),
     package_dir={'':'src'},
     package_data={
-        'pyetlx': ['src/*'],
+        '': ['src/*'],
     },
     python_requires='>=3.9, <4',
     python_tag = f"cp{sys.version_info.major}{sys.version_info.minor}",
