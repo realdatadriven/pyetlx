@@ -113,7 +113,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp311-cp311-win_amd64
+        python3 setup.py bdist_wheel
     
     - name: Build Python wheel windows
       if: ${{ matrix.os == 'windows-latest--'}}
