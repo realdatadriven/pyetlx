@@ -94,7 +94,7 @@ jobs:
     - name: Set short Python version
       if: ${{ matrix.os != 'windows-latest'}}
       run: |
-        SHORT_PYTHON_VERSION=${{ matrix.python-version//./}}
+        SHORT_PYTHON_VERSION={{ matrix.python-version //./}}
         echo "SHORT_PYTHON_VERSION=$SHORT_PYTHON_VERSION" >> $GITHUB_ENV
       shell: bash
       
