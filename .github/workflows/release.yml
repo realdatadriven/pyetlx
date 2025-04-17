@@ -91,13 +91,12 @@ jobs:
       run: |
         python3 fix.py
 
-    - name: Set short Python version
-      if: ${{ matrix.os != 'windows-latest'}}
-      run: |
-        SHORT_PYTHON_VERSION={{ matrix.python-version //./}}
-        echo "SHORT_PYTHON_VERSION=$SHORT_PYTHON_VERSION" >> $GITHUB_ENV
-      shell: bash
-      
+#    - name: Set short Python version
+#      if: ${{ matrix.os != 'windows-latest'}}
+#      run: |
+#        SHORT_PYTHON_VERSION={{ matrix.python-version //./}}
+#        echo "SHORT_PYTHON_VERSION=$SHORT_PYTHON_VERSION" >> $GITHUB_ENV
+#      shell: bash      
 
     - name: Build Python wheel (Linux)
       if: ${{ matrix.os == 'ubuntu-22.04' }}
