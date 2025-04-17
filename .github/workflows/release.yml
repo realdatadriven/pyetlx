@@ -128,7 +128,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp${{ env.SHORT_PYTHON_VERSION }}-any-win32
+        python3 setup.py bdist_wheel --plat-name cp11-any-win32
     
     - name: Build Python wheel windows
       if: ${{ matrix.os == 'windows-latest--'}}
