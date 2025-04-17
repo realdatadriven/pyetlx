@@ -104,7 +104,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp11-any-manylinux-x86_64 
+        python3 setup.py bdist_wheel --python-tag cp311 --abi-tag any --plat-name cp11-any-manylinux-x86_64 
     
     - name: Build Python wheel (Macos)
       if: ${{ matrix.os == 'macos-latest' }}
@@ -127,7 +127,7 @@ jobs:
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp11-any-win32
+        python3 setup.py bdist_wheel   --plat-name cp11-any-win32
     
     - name: Build Python wheel windows
       if: ${{ matrix.os == 'windows-latest--'}}
