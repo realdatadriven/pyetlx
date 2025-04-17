@@ -91,6 +91,14 @@ jobs:
       run: |
         python3 fix.py
 
+    - name: Set short Python version
+      if: ${{ matrix.os != 'windows-latest'}}
+      run: |
+        SHORT_PYTHON_VERSION=${{ matrix.python-version//./}}
+        echo "SHORT_PYTHON_VERSION=$SHORT_PYTHON_VERSION" >> $GITHUB_ENV
+      shell: bash
+      
+
     - name: Build Python wheel (Linux)
       if: ${{ matrix.os == 'ubuntu-22.04' }}
       run: |
@@ -107,13 +115,20 @@ jobs:
         cd ..
         python3 setup.py bdist_wheel --plat-name cp${{ matrix.python-version }}-any-macosx_x86_64 
     
+    - name: Set short Python version (Windows)
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        $shortVer = "${{ matrix.python-version }}".Replace(".", "")
+        echo "SHORT_PYTHON_VERSION=$shortVer" >> $env:GITHUB_ENV
+      shell: pwsh
+    
     - name: Build Python wheel 
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
         cd ./src
         make build
         cd ..
-        python3 setup.py bdist_wheel --plat-name cp311-cp311-win_amd64
+        python3 setup.py bdist_wheel --plat-name cp${{ env.SHORT_PYTHON_VERSION }}-any-win32
     
     - name: Build Python wheel windows
       if: ${{ matrix.os == 'windows-latest--'}}
