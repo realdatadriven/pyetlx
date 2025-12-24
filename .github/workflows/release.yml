@@ -86,7 +86,6 @@ jobs:
     - name: Generate Python Bindings
       run: |
         gopy gen -output=src github.com/realdatadriven/etlx
-        ls -lsh src
       
     - name: Fix Generated Code
       run: |
