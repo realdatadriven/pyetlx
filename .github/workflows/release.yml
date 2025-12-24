@@ -130,7 +130,6 @@ jobs:
         make build
         cd ..
         python3 setup.py bdist_wheel --python-tag cp311 --plat-name win32
-        ls -lsh
     
     - name: Build Python wheel windows
       if: ${{ matrix.os == 'windows-latest--'}}
